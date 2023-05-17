@@ -7,18 +7,18 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button"
         android:layout_width="121dp"
         android:layout_height="59dp"
         android:text="Select"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.895" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button2"
         android:layout_width="116dp"
         android:layout_height="70dp"
         android:text="Predict"
@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.903" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView"
         android:layout_width="279dp"
         android:layout_height="143dp"
         app:layout_constraintBottom_toBottomOf="parent"
