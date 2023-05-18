@@ -23,7 +23,9 @@ import com.google.android.gms.fitness.data.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,12 +39,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] labels=new String[1001];
+        int cnt=0;
+        BufferedReader bufferedReader;
+
+
+            try {
+                bufferedReader = new BufferedReader(new InputStreamReader(getAssets().open("labels_mobilenet_quant_v1_224.txt")));
+                String line = bufferedReader.readLine();
+                while (line!=null) {
+                    labels[cnt] = line;
+                    cnt++;
+                    line = bufferedReader.readLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         setContentView(R.layout.activity_main);
 
         imgView = (ImageView) findViewById(R.id.imageView);
         tv = (TextView) findViewById(R.id.textView2);
         select = (Button) findViewById((R.id.button));
         predict = (Button) findViewById(R.id.button2);
+
 
         select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 startActivityForResult(intent, 100);
             }
+
+
+
+
+
         });
+
         predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     // Releases model resources if no longer used.
-                    tv.setText(getmax(outputFeature0.getFloatArray())+" ");
+
+                    tv.setText(labels[getmax(outputFeature0.getFloatArray())]+" ");
                     model.close();
                 } catch (IOException e) {
                     // TODO Handle the exception
